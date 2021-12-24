@@ -1,0 +1,75 @@
+../jpl30s/        | location of input files                          (1)
+/home/ben/PSD/    | location of input ACF files                      (2)
+1280-1959.acf     | label+extension for ACF files                   (2a)
+1280 1900         | minweek ; maxweek   (0 0 => all)                 (3)
+7                 | weekday (0=sun, 6=mon, 7=all)                    (4)
+7                 | minimum number of clock required!                (5)
+0.6               | Min. fraction of clocks to jump Horizontal       (6)
+0.95              | Fraction of those clocks that need opposite jump (7)
+0.01              |  dh (jump step size!)                            (8)
+0.00 2.0          | min/max jump height to consider! (min++dh)       (9)
+500               | max Window size (actual max will be ++1)        (10)
+1.645             | 'sigma' range!                                  (11)
+0 2               | remPoly?, order                                 (12)
+all all           | Rb, Cs, or all/both                             (13)
+test1             | Label for output files                          (14)
+===================
+/home/ben/jpl30s/    | location of input files                       (1)
+/home/public/DM/data/jpl30s/    | location of input files            (1)
+
+
+1.
+Location of input files, including jpl30s, and PRN_GPS_GPSDM file
+
+2.
+It uses the ACF files to know the correct standard deviation for the clocks.
+Note: doesn't use the autocorrelation function, just the s.d.
+If these files do not exist, the program will still work, but will assume
+the "worst case" standard deviation.
+
+2a.
+The ACF files have a 'label' attached, because there are different ways of
+calculating the ACFs and standard deviations.
+
+5.
+Will not run for any days that have fewer than this number of available clocks.
+~7 seems reasonable.
+
+6.
+Fraction of clocks that need to experience a "vertical jump" (all jump at same
+time) i.e. the reference-clock jump.
+Should essentially always be 60% = 0.6.
+
+7.
+Of the clocks that experienced the 'vertical' jump, what fraction of these
+also need to experience a jump in the opposite direction (in given window)
+to be considered a "candidate event"
+
+8.
+Step size (in jump height, ns) for stepping over possible jump heigths.
+Must be less than smallest possible sigma!
+
+9.
+Window of S^(1) jump heights (magnitudes) to consider
+
+10.
+Maximum J_W window size.
+
+11.
+Will only count jumps that occur within this range!
+i.e. h +/- sigma
+1.645sig = 90% c.l.
+
+13.
+Can search through all clocks, blocks, or just a given combination.
+For example may be "Rb IIF" to only consider RbIIF clocks.
+
+
+
+
+
+
+
+
+
+

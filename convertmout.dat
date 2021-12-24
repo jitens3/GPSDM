@@ -1,0 +1,85 @@
+../jpl30s/           | location of input files                             (1)
+mout/                | location for output files                           (2)
+1584 0               | minweek ; maxweek (maxweek=0 => just 1 week)        (3)
+5                    | weekday (0=sun, 6=mon, 7=all)                       (4)
+1                    | Overwrite? 0=skip, 1=run+overwrit *3                (5)
+1 2 1                | remove poly? (0=n,1=y); order; weighted? (0,1)      (6)
+1 Rb all             | change ref? Clk, Blk                                (7)
+1                    | Difference? (-1=no, 0=center, 1=single, 2=dbl)      (9)
+1                    | Format (0=Andrei mout format,1=simple format)      (10)
+0                    | iNorm: "Normalises" the data  (only for 'simple')  (11)
+S1                   | Label for output file. Put 'na' for no label.
+======================
+
+/home/ben/jpl30s/    | location of input files                             (1)
+/home/public/DM/data/jpl30s/    | location of input files                  (1)
+
+
+1:
+The directory that contains the 30_s clk files.
+
+2: 
+File path to place output files!
+Put "0" to have ouput files in same directory as parent files.
+
+3:
+minweek, maxweek.
+Put "0" for the maxweek to run for only one week.
+
+4:
+Which day to run the code for 0=sun, 6=mon.
+Put '7' to run for each day.
+Will aoutput a sepperate file for each day.
+
+5:
+If =0, then will not re-run if outfile file exists already (saves time).
+If =1, will run anyway, and overwrite existing file.
+
+
+6:
+Removes a polynomial, three inputs: a b c.
+a: 0= do nothing, 1=removes a polynomial.
+b: order for the polynomial. Can be any integer (but not 0). 2 is default.
+c: Weighted? If =1, uses the formal errors to perform weighted least squares.
+
+7:
+Change which clock is used as reference.
+Three inputs, a, b, c
+a:  =0 means no. =1 use one of the sat. clocks as reference.
+b:  Rb/Cs (which type of clock to use as reference)
+c: =all/II/IIA/IIR/IIF which block to use as reference.
+
+
+9:
+Difference the data.
+Note: "0" doesn't do nothing.
+-1 = Do nothing
+0  = Don't difference, but "center" the data by subtracting the average
+1  = single-order difference z_i = d_i+1 - d_i
+2  = double difference  z_i = d_i+2 - 2d_i+1 + d_i
+(note, I do not devide by 30s, since the numbers become too small).
+
+10:
+Format for output:
+0 = Andrei's original ".mout" format to be read by Andrei's MMA notebook.
+1 = Simple format with each clock in a sepperate column, each epoch a new row.
+
+11:
+iNorm: "Normalises" the data (devides by 'sigma'):
+Note: this only applies to the 'simple' format (see line 10.)
+       0 => do nothing. Default.
+       1 => Normalise by formal error for each data point.
+       2 => Normalise by average formal error for each clock
+       3 => Normalise by standard deviation of each clock
+       4 => Normalise by overall average of formal error
+
+
+
+
+
+
+
+
+
+
+

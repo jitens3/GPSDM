@@ -1,0 +1,28 @@
+../jpl30s/        | location of input files                         (1)
+0 0               | minweek, maxweek. 0 0 means all.                (2)
+1                 | =0 => Just fetch, =1 => fetch and check         (3)
+1 1               | write out as binary? do positions? 0=no, 1=yes  (4)
+/home/ben/jplbin/ | binary output location                          (5)
+===================
+
+/home/ben/jpl30s/    | location of input files                          (1)
+/home/public/DM/data/jpl30s/    | location of input files               (1)
+
+Note: program will prompt for user the enter 'y' to double-check directory
+is correct.
+
+1.
+Location for the JPL files. Double check this is correct!
+
+2. Min and max weeks to download/check
+
+3.
+If =0, will just see if the file exists, and if not, will download it
+if =1, will also open the file, and check:
+  a) count the number of found reference clocks
+  b) check if the SVN assignments in our file match those in PRN_GPS
+  c) check if all the PRNs have entries in the ECI position files
+
+4. Write out as binary?
+First option: data
+second option: positions

@@ -1,0 +1,96 @@
+/home/tday/work/new_jpl/          | Location of data input files            (1)
+../../PSD/             | Location of PSD input files             (2)
+../../PSD/             | Location of ACF input files             (3)
+./priorCDF/         | Location of prior CDF files             (4) 
+0 1                 | Sanity checks? Binary files?            (5)
+1759 0 1759 0      | Week/day range (W1 D1 W2 D2)            (6)
+0 1201 30           | event invest? event ep, half-JW         (7)
+1280-1959           | acf_label                               (8)
+1 1 1               | exact, Detrend & difference (idiff)     (9)
+twall  0.7  1.      | model, R(/Rgps), alpha/pi               (10)
+all                 | Assume coupling?                        (11)
+1024 4096 .010      | NMC, param NMC, hmin                    (12)
+10 7.7             | O_cut, SNR_cut                          (13)
+40  1                | Limit # cores (0=no), //ise iterations? (14)
+searchlogx          | label for output files                  (15)
+====================/
+
+1. XXX Path for these may vary XXX
+Location of data files
+
+2. XXX Path for these may vary XXX
+Location of PSD and ACF files.
+  PSD files are used to simulate realistic clock data.
+  ACF files are used to generate the covariance/Hessian matrices (multivariate)
+  Neither files are needed if you use only white noise.
+
+
+3.  XXX Path for these may vary XXX
+Location for numerical prior CDF files.
+  These must be plain text files, named:
+    "psi.cdf"       - For angles: note: psi angle (in DM halo frame!)
+    "psiperp.cdf"   - For angles (perpendicular)
+    "v.cdf"         - For (scalar) velocity
+    "vperp.cdf"     - For perpendicular (scalar) velocity
+
+4. Sanity checks and binary files:
+  a) Inclusion of the sanity check print (will happen every day if specified 1)
+  b) Inclusion of the binary files (1 for include)
+
+5. Week/day range:
+Refers to the start week & day + end week & day as
+  the week in its actual value (ie- w 1200) and day
+  as its relative value to the week (ie- d {0-6})
+
+6. ACF file 'path':
+The label that was applied to the PSD/ACF files. Usually refers to the
+    weeks that were used to create them. E.g., the PSD file:
+    CsII-15-AMC2-128-19.psd  The label is "128-19".
+
+7.exact vs. approx.:
+ 
+  b) Use cholesky inversion (1) or approximate inversion (0)
+*"mixed" difference: 2-order for CsII and CsIIA, 1-order for all others.
+
+8. Detrend & Difference:
+  a) Difference. 0 = 'zeroing' the data, 1 = taking 1st order difference.
+  b) Subtracting polynomials from data. 0 = it doesn't, 1 = it does
+
+9. Model designation:
+Three inputs:
+  a) model: twall, dwall, monopole, string
+  b) Rdm: overall impact parameter, in units of Rgps. Typical ~0.7. No range.
+  c) alpha: impact parameter angle, in units of pi. [0,2]. No range.
+b and c only needed for monopoles/strings
+
+10. Coupling:
+Assume one particular coupling (i.e. to alpha, m_e, or m_q) dominates.
+    Used to work out the relative sensitivity coefficients for each clock.
+    can be: alpha, me, mq, or 'all'
+    'all' (or anything else) will assume all clocks respond the same way.
+
+11. Monte Carlo integration, hmin value:
+N_MC. Number of grid points to use for MC grid.
+hmin is integration bounds for the h-integral.
+
+12. Odds & SNR cutoffs:
+  a)  O_cut. Odds ratios above this value (with j=+/-1) are considered "found"
+  b)  SNR_cut. SNR values above this within 1 epoch of injected signal are "found"
+
+13.Cores & ISE:
+  (a) Limit the number of cores the code is parallelised over.
+      Does nothing if openMP is not enabled.
+      If you place 0, there will be no limit (default).
+      If you place 1, there will be no parallelisation.
+      Placing a larger number than the number of cores can actually be better too
+      (depending on the type of CPU?)
+  (b) Parallelise over iterations (=1), or inside the MC loop (=0).
+      Set to 1 for fastest results.
+
+14. Estimate parameter
+If an SNR value exceeds the threshold, event paramters will be estimated.
+
+15.Label:
+When the program goes to output the 'serialized' file,
+  it will use the string that is in this line's location.
+  Note: Changing the name will create a new file separate from the orig. name

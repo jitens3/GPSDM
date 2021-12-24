@@ -1,0 +1,76 @@
+../jpl30s/        | location of input files                      (1)
+/home/ben/PSD/    | location of PSD/ACF files                    (2)
+1280-1959.acf     | "label" + extension for input ACF files     (2a)
+testOut           | folder to place output files                 (3)
+1300 1301         | minweek ; maxweek   (0 0 => all)             (4)
+7                 | weekday (0=sun, 6=mon, 7=all)                (5)
+7                 | minimum number of clock required!            (6)
+0.6               | Min. fraction of clocks to jump (ref jump)   (7)
+0.90              | Fraction of those clocks that jump back      (8)
+0.01              | dh (jump step size!)                         (9)
+0.25 0.50         | min/max height to consider! (min++dh)       (10)
+1.645             | 'sigma' range!                              (11)
+Rb                | Rb, Cs, or all/both                         (12)
+test1             | Label for output files                      (13)
+===================
+
+/home/ben/jpl30s/   | location of input files                    (1)
+/home/ben/PSD/      | location of PSD/ACF files                  (2)
+
+
+1.
+Location of input files, including jpl30s, and PRN_GPS_GPSDM file
+
+2.
+It uses the ACF files to know the correct standard deviation for the clocks.
+Note: doesn't use the autocorrelation function, just the s.d.
+If these files do not exist, the program will still work, but will assume
+the "worst case" standard deviation.
+
+2a.
+The ACF files have a 'label' attached, because there are different ways of
+calculating the ACFs and standard deviations.
+
+3.
+Folder for output.
+On linux, will create this folder. Otherwise, you have to create it first!
+
+6.
+Will not run for any days that have fewer than this number of available clocks.
+~7 seems reasonable.
+
+7.
+Fraction of clocks that need to experience a "vertical jump" (all jump at same
+time) i.e. the reference-clock jump.
+Should essentially always be 60% = 0.6.
+
+8.
+Of the clocks that experienced the 'vertical' jump, what fraction of these
+also need to experience a jump in the opposite direction (in given window)
+to be considered a "candidate event"
+
+9.
+Step size (jump height, ns) for stepping over possible jump heigths.
+Must be less than smallest possible sigma!
+
+11.
+Will only count jumps that occur within this range!
+i.e. h +/- sigma
+1.645sig = 90% c.l.
+
+
+
+
+
+**********
+GPS weeks:
+1060 => ~May 2000. First week that 30s solutions available
+1147 => beginning of 2002
+1303 => beginning of 2005
+1280 => First available week that has ECI data. 
+1881 => Last available week that has ECI data. 
+0 is a wildcard - will go from 1060, to "end of 2018"
+
+
+../public/DM/data/jpl30s/
+

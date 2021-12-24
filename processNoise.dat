@@ -1,0 +1,118 @@
+../jpl30s/         | location of input files                           (1)
+testOut/           | output directory                                  (2)
+1280 1960          | minweek ; maxweek (0 => only 1 week)              (3)
+7                  | weekday (0=sun, 6=mon, 7=all)                     (4)
+1 1 1 1 1 1        | SDunc, PSD, ACF, AVAR, Hist (1/0), Cross-Clock Cr (5)
+0.0 10  100        | Excl: on sd (0=no), on fer=0 [how many], outlier  (6)
+0 1                | Rem poly? Order(0=no), weighted (1=yes)          (6a)
+1                  | Swap refs? 0=Hmas only, 1=all                     (7)
+test               | out_label, can be 'na'=no label                   (8)
+0 1280-1960        | Test Simulated data? y/n, psd_label               (9)
+====================
+This file contains input parameters, read by "processNoise.x" program.
+
+/home/ben/jpl30s/    | location of input files                        (1)
+/home/public/DM/data/jpl30s/    | location of input files             (1)
+/home/ben/PSD/    | location of input files                           (1)
+
+1:
+Location for all 30_s clk, and PRN_GPS files.
+
+2:
+Location for output files. If this folder does
+not exist, it will be created (only in LINUX!).
+You can use this to make new directories for different runs, to seperate the 
+files. Note that sometimes there can be many output files created, so if you no
+longer need them, they should be deleted to save space.
+NB: don't forget the trailing '/' !
+
+3:
+GPS weeks to include.
+Placing "0" means all available weeks will be included.
+If both values are the same, only that week will be run.
+If the 'maxweek' is zero, will run only for the single week (minweek)
+
+4:
+Which days to include. 0 means only monday etc. 7 means do entire week.
+Should really always be 7, except when testing and only doing a single day.
+
+5:
+Which functions to calculate? (Note: s.d. is always calculated!)
+Each entry is just yes(1) or no(0).
+SDunc = uncertainty in the standard deviation
+PSD = power spectrums
+ACF = Autocorrelation functions
+AVAR = Allan variance
+Hist = histogram
+CrossClock Cor = Cross-Clock correlations
+
+6. Exclude any clocks?
+1) Exclude based on (1 order) s.d. 0=no, >0 means exclude clocks with sd's 
+    larger than the given number. Typically 0 or >0.25
+2) Exclude based on missed points? 0 means no, 1 means exclude if there
+    is even 1 'missed' point, 2=exlucde if there are 2 missed points etc.
+3) Outlier. If 0, won't skip. Otherwise, any clock that has an S1 data point
+    larger than this number will be skipped. Should be >>~1 (or 0)
+
+6a.
+Remove a polynomial?
+First option is polynomial order: 0=no polynomial subtract.
+Second option is weighted (1/0 = yes/no)
+
+7.
+Swap the references?
+0= no, just use the original (Hmaser) reference.
+1= yes. Use every available GPS block as reference. Note: when swapping 
+reference, clock is chosen by SVN (to ensure always the same clock for 0,1,2
+order differecing).
+
+8:
+This is just a text label that will go in the output file name.
+Helps you work out which settings were used to create that output run.
+put 'na' for no label.
+
+9:
+For testing the simulated data.
+1=use simulated data, 0=use real data.
+Note: uses line (1) as input for the PSD files!
+Second input is label of PSD files.
+Uses randomised SVNs, and randomised reference clocks (USN3, AMC2, USN7)
+Note: number of each clock simulated is hard-coded in!
+Note: if there are no available clocks for a given reference, Hmas (i.e. the 
+average reference clock) will be used instead without warning.
+For example, for block II clocks and USN7 reference! - not big problem.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
